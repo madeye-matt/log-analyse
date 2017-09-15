@@ -26,7 +26,9 @@ func initialise() (*os.File, Config) {
 		log.Fatal("Log files must be specified for processing")
 	}
 	logFile := initLogging("log-analyse.log")
+	log.Printf("Logging initialised")
 	config, err := loadConfig(*configFile)
+	log.Printf("Config loaded")
 	checkError("initialise", err)
 
 	return logFile, config
@@ -86,7 +88,28 @@ func printMap(timestamp time.Time, miscOptions MiscOptions, m map[string]string,
 	fmt.Printf("\n")
 }
 
+func isFiltered(filters []Filter, m map[string]string) bool {
+	for _, filter := range filters {
+		data := m[filter.FieldName]
+
+		log.Printf("data: %s, regexp: %s", data, filter.Regexp)
+
+		if data != "" {
+			re := regexp.MustCompile(filter.Regexp)
+
+			if re.MatchString(data) == false {
+				return true
+			}
+		} else {
+			return true
+		}
+	}
+
+	return false
+}
+
 func processLogFile(config Config, filename string){
+	log.Printf("Processing log file %s", filename)
 	file, err := os.Open(filename)
 	checkError("open logfile", err)
 	defer file.Close()
@@ -104,8 +127,13 @@ func processLogFile(config Config, filename string){
 			outputFields = config.OutputFields
 		}
 
+		filtered := isFiltered(config.Filters, result)
+		log.Printf("Scanned line %d (filtered = %b)", lineCount, filtered)
+
 		if len(result) == 0 {
 			log.Printf("Line %d: no regexp matched - line ignored", lineCount)
+		} else if filtered {
+			// Do nothing
 		} else {
 			printMap(timestamp, config.MiscOptions, result, outputFields)
 		}

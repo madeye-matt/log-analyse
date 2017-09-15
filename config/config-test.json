@@ -21,7 +21,8 @@
       ]
     }
   ],
-  "Filter":[
+  "Filters":[
+    { "FieldName": "RequestTime", "Regexp": "^23[0-9]+$" }
   ],
   "OutputFields":[
     "IPAddress",
