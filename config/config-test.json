@@ -1,0 +1,37 @@
+{
+  "Load":[
+    {
+      "Regexp": "^([0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+) (-|[\\w]+) (-|[\\w]+) \\[([^\\]]*)\\] ([A-Z]*) (.*) (HTTP\/[0-9]+\\.[0-9]+) ([0-9]+) (-|[0-9]+) \"(-|[^\"]+)\" \"([^\"]+)\" ([^ ]+)[ ]?([0-9]*)?$",
+      "TimestampFormat": "02/Jan/2006:15:04:05 -0700",
+      "GroupNames":[
+        "IPAddress",
+        "RemoteLogicalUsername",
+        "RemoteUsername",
+        "_timestamp",
+        "RequestMethod",
+        "RequestURL",
+        "Protocol",
+        "StatusCode",
+        "ResponseSize",
+        "Referrer",
+        "UserAgent",
+        "SessionId",
+        "RequestTime",
+        "Rest"
+      ]
+    }
+  ],
+  "Filter":[
+  ],
+  "OutputFields":[
+    "IPAddress",
+    "RequestMethod",
+    "RequestURL",
+    "Protocol",
+    "StatusCode",
+    "ResponseSize",
+    "RequestTime"
+  ],
+  "SpaceReplacement": "-",
+  "OmitIfEmpty": true
+}

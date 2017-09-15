@@ -1,0 +1,13 @@
+{
+  "Load":[
+    {
+      "Regexp": "^(.*)$",
+      "GroupNames":[
+        "Everything"
+      ]
+    }
+  ],
+  "Filter":[
+    { "FieldName": "Everything", "Regexp": "^[0-9][0-9]$"}
+  ]
+}
