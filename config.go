@@ -20,6 +20,10 @@ type Config struct {
 	Load    []Load
 	Filters []Filter
 	OutputFields []string
+	MiscOptions MiscOptions
+}
+
+type MiscOptions struct {
 	SpaceReplacement string
 	OmitIfEmpty bool
 }

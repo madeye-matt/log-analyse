@@ -72,14 +72,14 @@ func processLogLine(load []Load, line string, lineNumber int) (time.Time, map[st
 	return timestamp, result, groupNames
 }
 
-func printMap(timestamp time.Time, spaceReplacement string, omitIfEmpty bool, m map[string]string, fieldList []string){
+func printMap(timestamp time.Time, miscOptions MiscOptions, m map[string]string, fieldList []string){
 	if timestamp.IsZero() == false {
 		fmt.Printf("[%s] ", timestamp.Format(splunkDateFormat))
 	}
 	for _, fieldName := range fieldList {
 		value := m[fieldName]
-		if omitIfEmpty == false || len(value) > 0 {
-			key := strings.Replace(fieldName, " ", spaceReplacement, -1)
+		if miscOptions.OmitIfEmpty == false || len(value) > 0 {
+			key := strings.Replace(fieldName, " ", miscOptions.SpaceReplacement, -1)
 			fmt.Printf("%s=\"%v\" ", key, value)
 		}
 	}
@@ -107,7 +107,7 @@ func processLogFile(config Config, filename string){
 		if len(result) == 0 {
 			log.Printf("Line %d: no regexp matched - line ignored", lineCount)
 		} else {
-			printMap(timestamp, config.SpaceReplacement, config.OmitIfEmpty, result, outputFields)
+			printMap(timestamp, config.MiscOptions, result, outputFields)
 		}
 
 		lineCount++

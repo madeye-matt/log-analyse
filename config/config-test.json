@@ -32,6 +32,8 @@
     "ResponseSize",
     "RequestTime"
   ],
-  "SpaceReplacement": "-",
-  "OmitIfEmpty": true
+  "MiscOptions": {
+    "SpaceReplacement": "-",
+    "OmitIfEmpty": true
+  }
 }
